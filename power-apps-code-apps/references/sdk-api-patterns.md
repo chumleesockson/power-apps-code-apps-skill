@@ -71,6 +71,16 @@ await AccountsService.update(accountId, { name: "New Name" });
 await AccountsService.delete(accountId);
 ```
 
+### Mapper Rule: Match Generated Model Casing Exactly
+
+When writing or modifying any `mapToDataverse` function that returns an object sent to a generated Dataverse service (`create` / `update`):
+
+- Read the corresponding generated model interface in `generated/models/` before defining property names.
+- Use exact property casing from the generated `*Base` interface.
+- For navigation bindings, keep the generated PascalCase shape for `@odata.bind` keys (for example: `"ppcoe_MadeBy@odata.bind"`, not `"ppcoe_madeby@odata.bind"`).
+- Never assume Dataverse logical-name casing (often lowercase) matches generated TypeScript model casing; the SDK generator may capitalize segments.
+- If the mapper returns `Record<string, unknown>` instead of a generated model type, add a comment naming the target generated interface, for example: `// Target: Ppcoe_decisionsBase`.
+
 ---
 
 ## Query Options
