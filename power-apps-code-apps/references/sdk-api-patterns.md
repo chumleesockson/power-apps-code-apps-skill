@@ -1,6 +1,6 @@
 # Power Apps SDK API Patterns
 
-Package: `@microsoft/power-apps` (v1.0.3+)
+Package: `@microsoft/power-apps` (v1.0.4+)
 
 **Important**: The `initialize()` function was removed in v1.0. Do NOT call `initialize()`. Data calls, context retrieval, and platform interactions work directly without initialization.
 

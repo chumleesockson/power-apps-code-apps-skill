@@ -1,9 +1,15 @@
-# Power Platform CLI Commands for Code Apps
+# CLI Commands for Code Apps
+
+> **SDK v1.0.4+**: Project init, local dev, and deployment now use the npm-based CLI (`npx power-apps`). Data source management still uses `pac code` commands. The npm CLI handles authentication automatically — you no longer need `pac auth create` for these workflows.
 
 ## Authentication
 
+The `npx power-apps` commands authenticate automatically — sign in with your Power Platform account when prompted on first use.
+
+For data source commands that still use `pac`, you may still need a PAC auth profile:
+
 ```bash
-# Create auth profile for an environment
+# Create auth profile for an environment (only needed for pac code data source commands)
 pac auth create --environment {environmentId}
 
 # List auth profiles
@@ -28,18 +34,26 @@ npx degit microsoft/PowerAppsCodeApps/templates/vite#main my-app
 # After scaffolding
 cd my-app
 npm install
-pac code init --displayName "My App Name"
+npm install @microsoft/power-apps
+
+# Initialize the code app (interactive mode — prompts for display name and environment)
+npx power-apps init
+
+# Or pass options directly
+npx power-apps init --displayName "My App Name" --environmentId {environmentId}
 ```
 
-`pac code init` generates `power.config.json` with environment metadata. App logic should never interact with this file directly.
+`npx power-apps init` generates `power.config.json` with environment metadata and authenticates automatically. App logic should never interact with this file directly.
 
 ## Local Development
 
 ```bash
-npm run dev
+npx power-apps run
 ```
 
-The starter template uses Vite dev server. The `dev` script typically runs `vite` or `concurrently "vite" "pac code run"`.
+This starts a local development server. Open the URL labeled **Local Play** in the same browser profile as your Power Platform tenant.
+
+> **Note**: Since December 2025, Chrome and Edge block requests from public origins to local endpoints by default. You may need to grant browser permission for local network access during development.
 
 ## Build and Deploy
 
@@ -49,11 +63,11 @@ Always deploy to a specific solution — never to the default solution. This ens
 # Build the app
 npm run build
 
-# Push to a specific solution (required)
-pac code push --solutionName {solutionName}
+# Push to Power Platform environment
+npx power-apps push
 ```
 
-`pac code push` compiles and publishes the app to the Power Platform environment. The app becomes available at `https://apps.powerapps.com/play/e/{environmentId}/a/{appId}`.
+`npx power-apps push` publishes a new version of the code app to the environment configured during `init`. When the command finishes, it returns a Power Apps URL to run the app.
 
 Use **Power Platform Pipelines** to promote solutions across stages (Dev → Test → Prod). Pipelines include preflight checks for dependencies and connection references.
 

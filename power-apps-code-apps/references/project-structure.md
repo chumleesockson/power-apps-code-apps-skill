@@ -46,7 +46,7 @@ my-app/
 | Data Fetching  | TanStack Query (React Query)                      |
 | Tables         | TanStack Table                                    |
 | Icons          | Lucide React                                      |
-| SDK            | `@microsoft/power-apps` v1.0.3                    |
+| SDK            | `@microsoft/power-apps` v1.0.4+                   |
 
 ## vite.config.ts
 
