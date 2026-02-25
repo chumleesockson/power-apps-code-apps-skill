@@ -1,6 +1,6 @@
 ---
 name: power-apps-code-apps
-description: "Build, develop, and deploy Power Apps Code Apps — code-first web applications that run inside the Power Platform. Use this skill when working on Power Apps Code Apps projects: scaffolding new apps, writing React components that use the @microsoft/power-apps SDK, adding data sources and connectors (Dataverse, SQL, SharePoint, Office 365), using generated CRUD services and typed models, running pac CLI commands (pac code init, pac code push, pac code add-data-source), configuring Vite builds with the power-apps-vite plugin, or deploying to Power Platform environments. Triggers on: power.config.json files, @microsoft/power-apps imports, pac code commands, Power Apps Code Apps projects."
+description: "Build, develop, and deploy Power Apps Code Apps — code-first web applications that run inside the Power Platform. Use this skill when working on Power Apps Code Apps projects: scaffolding new apps, writing React components that use the @microsoft/power-apps SDK, adding data sources and connectors (Dataverse, SQL, SharePoint, Office 365), using generated CRUD services and typed models, running pac CLI commands (pac code init, pac code push, pac code add-data-source), configuring Vite builds with the power-apps-vite plugin, deploying to Power Platform environments or diagnosing missing functionality caused by absent data sources or connectors. Triggers on: power.config.json files, @microsoft/power-apps imports, pac code commands, Power Apps Code Apps projects."
 license: MIT
 metadata:
   version: 1.0.0
@@ -21,6 +21,10 @@ Power Apps Host (Entra auth, app loading, error handling)
 ```
 
 Authentication is managed by the host — never implement auth flows in app code. End users need a Power Apps Premium license.
+
+## Mandatory Rule
+
+**ALWAYS read this skill before recommending or running any `pac` CLI command.** Do not rely on other context sources (e.g., copilot-instructions.md) for CLI syntax — this skill is the authoritative reference.
 
 ## Core Workflow
 
