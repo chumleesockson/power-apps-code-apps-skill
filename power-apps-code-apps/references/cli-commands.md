@@ -1,26 +1,6 @@
 # CLI Commands for Code Apps
 
-> **SDK v1.0.4+**: Project init, local dev, and deployment now use the npm-based CLI (`npx power-apps`). Data source management still uses `pac code` commands. The npm CLI handles authentication automatically — you no longer need `pac auth create` for these workflows.
-
-## Authentication
-
-The `npx power-apps` commands authenticate automatically — sign in with your Power Platform account when prompted on first use.
-
-For data source commands that still use `pac`, you may still need a PAC auth profile:
-
-```bash
-# Create auth profile for an environment (only needed for pac code data source commands)
-pac auth create --environment {environmentId}
-
-# List auth profiles
-pac auth list
-
-# Select environment
-pac env select --environment {environmentId}
-
-# Verify current environment context
-pac env who
-```
+> **SDK v1.0.4+**: All Code Apps CLI commands use the npm-based CLI (`npx power-apps`). The PAC CLI (`pac code`) is no longer required. Authentication is handled automatically — sign in with your Power Platform account when prompted on first use.
 
 ## Project Scaffolding
 
@@ -89,8 +69,8 @@ Neither can be created via CLI — only through the UI.
 #### Dataverse (direct — no connection needed)
 
 ```bash
-pac code add-data-source -a dataverse -t {tableName}
-# Example: pac code add-data-source -a dataverse -t accounts
+npx power-apps add-data-source -a dataverse -t {tableName}
+# Example: npx power-apps add-data-source -a dataverse -t accounts
 ```
 
 #### Non-Dataverse with Connection References (recommended)
@@ -102,7 +82,7 @@ Connection references make solutions portable across environments (Dev/Test/Prod
 **Step 1: Discover the API name**
 
 ```bash
-pac connection list
+npx power-apps connection-list
 ```
 
 Output includes the **API name** (e.g., `shared_sql`, `shared_azureblobstorage`, `shared_office365users`) and connection ID for each connection. Use the API name as the `-a` value.
@@ -110,13 +90,13 @@ Output includes the **API name** (e.g., `shared_sql`, `shared_azureblobstorage`,
 **Step 2: Get solution ID**
 
 ```bash
-pac solution list --json
+npx power-apps solution-list --json
 ```
 
 **Step 3: List connection references in the solution**
 
 ```bash
-pac code list-connection-references -env {environmentURL} -s {solutionID}
+npx power-apps list-connection-references -env {environmentURL} -s {solutionID}
 ```
 
 Output includes display name, **logical name**, and connector for each reference. Match the connector column to the API name from Step 1. Use the **logical name** as the `-cr` value.
@@ -126,7 +106,7 @@ Output includes display name, **logical name**, and connector for each reference
 **Step 4: Add the data source**
 
 ```bash
-pac code add-data-source -a {apiName} -cr {connectionReferenceLogicalName} -s {solutionID}
+npx power-apps add-data-source -a {apiName} -cr {connectionReferenceLogicalName} -s {solutionID}
 ```
 
 #### Non-Dataverse with Direct Connection (not portable)
@@ -135,13 +115,13 @@ Direct connections bind to a specific user's connection ID. Avoid for production
 
 ```bash
 # Nontabular connector
-pac code add-data-source -a "shared_office365users" -c "{connectionId}"
+npx power-apps add-data-source -a "shared_office365users" -c "{connectionId}"
 
 # SQL table
-pac code add-data-source -a "shared_sql" -c "{connectionId}" -t "[dbo].[TableName]" -d "server.database.windows.net,dbname"
+npx power-apps add-data-source -a "shared_sql" -c "{connectionId}" -t "[dbo].[TableName]" -d "server.database.windows.net,dbname"
 
 # SQL stored procedure
-pac code add-data-source -a "shared_sql" -c "{connectionId}" -d "server,db" -sp "[dbo].[ProcName]"
+npx power-apps add-data-source -a "shared_sql" -c "{connectionId}" -d "server,db" -sp "[dbo].[ProcName]"
 ```
 
 ### Auto-Generated Files
@@ -160,28 +140,28 @@ generated/
 
 ```bash
 # List available connections
-pac connection list
+npx power-apps connection-list
 
 # Discover datasets for a connector
-pac code list-datasets -a {apiId} -c {connectionId}
+npx power-apps list-datasets -a {apiId} -c {connectionId}
 
 # Discover tables within a dataset
-pac code list-tables -a {apiId} -c {connectionId} -d {datasetName}
+npx power-apps list-tables -a {apiId} -c {connectionId} -d {datasetName}
 
 # List SQL stored procedures
-pac code list-sql-stored-procedures -c {connectionId} -d {datasetName}
+npx power-apps list-sql-stored-procedures -c {connectionId} -d {datasetName}
 
 # List connection references in a solution
-pac code list-connection-references -env {environmentURL} -s {solutionID}
+npx power-apps list-connection-references -env {environmentURL} -s {solutionID}
 
 # List solutions
-pac solution list --json
+npx power-apps solution-list --json
 ```
 
 ### Deleting Data Sources
 
 ```bash
-pac code delete-data-source -a {apiName} -ds {dataSourceName}
+npx power-apps delete-data-source -a {apiName} -ds {dataSourceName}
 ```
 
 **Important**: There is no refresh command. When a schema changes, delete and re-add the data source.

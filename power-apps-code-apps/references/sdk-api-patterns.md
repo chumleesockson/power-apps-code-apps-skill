@@ -43,7 +43,7 @@ ctx.host.sessionId;  // string - changes each app open
 
 ## Dataverse CRUD
 
-All generated services follow the same pattern. After running `pac code add-data-source -a dataverse -t accounts`, use:
+All generated services follow the same pattern. After running `npx power-apps add-data-source -a dataverse -t accounts`, use:
 
 ```typescript
 import { AccountsService } from "./generated/services/AccountsService";
