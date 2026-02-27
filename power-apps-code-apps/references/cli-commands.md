@@ -1,6 +1,8 @@
 # CLI Commands for Code Apps
 
-> **SDK v1.0.4+**: All Code Apps CLI commands use the npm-based CLI (`npx power-apps`). The PAC CLI (`pac code`) is no longer required. Authentication is handled automatically — sign in with your Power Platform account when prompted on first use.
+> **SDK v1.0.4+**: Most Code Apps CLI commands use the npm-based CLI (`npx power-apps`). Authentication is handled automatically — sign in with your Power Platform account when prompted on first use.
+>
+> **PAC CLI still required for**: listing connections (`pac connection list`), listing solutions (`pac solution list`), and listing SQL stored procedures (`pac code list-sql-stored-procedures`). These cannot be done with `npx power-apps`.
 
 ## Project Scaffolding
 
@@ -79,18 +81,18 @@ Connection references make solutions portable across environments (Dev/Test/Prod
 
 **Important: Do NOT guess API names** (the `-a` value). Always discover them from the environment.
 
-**Step 1: Discover the API name**
+**Step 1: Discover the API name** (requires PAC CLI)
 
 ```bash
-npx power-apps connection-list
+pac connection list
 ```
 
 Output includes the **API name** (e.g., `shared_sql`, `shared_azureblobstorage`, `shared_office365users`) and connection ID for each connection. Use the API name as the `-a` value.
 
-**Step 2: Get solution ID**
+**Step 2: Get solution ID** (requires PAC CLI)
 
 ```bash
-npx power-apps solution-list --json
+pac solution list
 ```
 
 **Step 3: List connection references in the solution**
@@ -139,8 +141,8 @@ generated/
 ### Discovery Commands
 
 ```bash
-# List available connections
-npx power-apps connection-list
+# List all code apps in the environment
+npx power-apps list-codeapps
 
 # Discover datasets for a connector
 npx power-apps list-datasets -a {apiId} -c {connectionId}
@@ -148,14 +150,36 @@ npx power-apps list-datasets -a {apiId} -c {connectionId}
 # Discover tables within a dataset
 npx power-apps list-tables -a {apiId} -c {connectionId} -d {datasetName}
 
-# List SQL stored procedures
-npx power-apps list-sql-stored-procedures -c {connectionId} -d {datasetName}
-
 # List connection references in a solution
 npx power-apps list-connection-references -env {environmentURL} -s {solutionID}
 
-# List solutions
-npx power-apps solution-list --json
+# List environment variables in the environment
+npx power-apps list-environment-variables
+```
+
+#### Commands requiring PAC CLI
+
+These discovery commands are **not** available via `npx power-apps` — use the PAC CLI instead:
+
+```bash
+# List available connections (needed to discover API names and connection IDs)
+pac connection list
+
+# List solutions (needed to get solution IDs)
+pac solution list
+
+# List SQL stored procedures for a dataset
+pac code list-sql-stored-procedures -c {connectionId} -d {datasetName}
+```
+
+### Other Commands
+
+```bash
+# Log out the current user
+npx power-apps logout
+
+# Manage telemetry settings
+npx power-apps telemetry
 ```
 
 ### Deleting Data Sources
