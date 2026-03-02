@@ -81,7 +81,7 @@ await AccountsService.update(id, { name: "New Name" })
 await AccountsService.delete(id)
 ```
 
-For complete API patterns (context, connectors, SharePoint, SQL, metadata, telemetry), see [references/sdk-api-patterns.md](references/sdk-api-patterns.md).
+For complete API patterns (context, connectors, SharePoint, SQL, metadata, telemetry), see [references/sdk-api-patterns.md](references/sdk-api-patterns.md). For connector-specific guidance (e.g., Office 365 people picker ID resolution), see [references/connectors.md](references/connectors.md).
 
 ### 4. Access App/User Context
 
