@@ -101,6 +101,24 @@ interface IGetAllOptions {
 
 ---
 
+## Dataverse Column Type Mapping
+
+Dataverse columns map to TypeScript types in generated models:
+
+| Dataverse Column Type | TypeScript Type | Notes |
+|---|---|---|
+| Yes/No (Boolean) | `boolean` | Returns `true` / `false` (not `1`/`0` or `"1"`/`"0"`) |
+| Choice (OptionSet) | `number` | Integer value of the selected option |
+| Text / Multiline Text | `string` | |
+| Whole Number | `number` | |
+| Decimal / Float | `number` | |
+| Currency | `number` | |
+| Date and Time | `string` | ISO 8601 format |
+| Lookup | `string` | GUID of the related record |
+| Unique Identifier | `string` | GUID |
+
+---
+
 ## Nontabular Connectors
 
 Example: Office 365 Users connector.

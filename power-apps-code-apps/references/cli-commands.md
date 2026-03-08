@@ -13,7 +13,7 @@ npx degit microsoft/PowerAppsCodeApps/templates/starter#main my-app
 # Minimal Vite template
 npx degit microsoft/PowerAppsCodeApps/templates/vite#main my-app
 
-# After scaffolding
+# Once files are ready
 cd my-app
 npm install
 npm install @microsoft/power-apps
