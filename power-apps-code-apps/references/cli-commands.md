@@ -25,11 +25,14 @@ npx degit microsoft/PowerAppsCodeApps/templates/starter#main my-app
 # Minimal Vite template
 npx degit microsoft/PowerAppsCodeApps/templates/vite#main my-app
 
-# After scaffolding
+# Once files are ready
 cd my-app
 npm install
 pac code init --displayName "My App Name"
 ```
+
+The user needs to be authenticated to an environment before running the `pac code init --displayName "My App Name"` command.
+If you are unsure, ask them if they have authenticated to a Power Platform environmnet before proceeding.
 
 `pac code init` generates `power.config.json` with environment metadata. App logic should never interact with this file directly.
 
