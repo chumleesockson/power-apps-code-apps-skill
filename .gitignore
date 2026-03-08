@@ -1,0 +1,5 @@
+# Ignore locally added external skills
+.agents/skills/
+.claude/skills/
+skills-lock.json
+settings.json

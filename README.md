@@ -11,7 +11,7 @@ npx skills add chumleesockson/power-apps-code-apps-skill
 ## What's Included
 
 - **SKILL.md** — Core workflow: scaffolding, data sources, SDK usage, build & deploy
-- **references/cli-commands.md** — Complete `pac code` CLI reference (auth, scaffolding, data sources, deployment)
+- **references/cli-commands.md** — Complete `npx power-apps` CLI reference (scaffolding, data sources, deployment)
 - **references/project-structure.md** — Project layout, technology stack, and Vite configuration
 - **references/sdk-api-patterns.md** — API patterns for Dataverse, connectors, SharePoint, SQL, and telemetry
 
@@ -21,5 +21,5 @@ This skill triggers when working with:
 
 - `power.config.json` files
 - `@microsoft/power-apps` imports
-- `pac code` CLI commands
+- `npx power-apps` CLI commands
 - Power Apps Code Apps projects

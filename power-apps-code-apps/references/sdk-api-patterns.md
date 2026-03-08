@@ -1,6 +1,6 @@
 # Power Apps SDK API Patterns
 
-Package: `@microsoft/power-apps` (v1.0.3+)
+Package: `@microsoft/power-apps` (v1.0.4+)
 
 **Important**: The `initialize()` function was removed in v1.0. Do NOT call `initialize()`. Data calls, context retrieval, and platform interactions work directly without initialization.
 
@@ -43,7 +43,7 @@ ctx.host.sessionId;  // string - changes each app open
 
 ## Dataverse CRUD
 
-All generated services follow the same pattern. After running `pac code add-data-source -a dataverse -t accounts`, use:
+All generated services follow the same pattern. After running `npx power-apps add-data-source -a dataverse -t accounts`, use:
 
 ```typescript
 import { AccountsService } from "./generated/services/AccountsService";
@@ -70,6 +70,16 @@ await AccountsService.update(accountId, { name: "New Name" });
 // DELETE
 await AccountsService.delete(accountId);
 ```
+
+### Mapper Rule: Match Generated Model Casing Exactly
+
+When writing or modifying any `mapToDataverse` function that returns an object sent to a generated Dataverse service (`create` / `update`):
+
+- Read the corresponding generated model interface in `generated/models/` before defining property names.
+- Use exact property casing from the generated `*Base` interface.
+- For navigation bindings, keep the generated PascalCase shape for `@odata.bind` keys (for example: `"ppcoe_MadeBy@odata.bind"`, not `"ppcoe_madeby@odata.bind"`).
+- Never assume Dataverse logical-name casing (often lowercase) matches generated TypeScript model casing; the SDK generator may capitalize segments.
+- If the mapper returns `Record<string, unknown>` instead of a generated model type, add a comment naming the target generated interface, for example: `// Target: Ppcoe_decisionsBase`.
 
 ---
 
